@@ -36,7 +36,7 @@ export const NewMovie = ({ onAdd }: NewMovieProps) => {
 
     onAdd(formData);
 
-    // Очистимо форму
+    // Clear the form
     setFormData({
       title: '',
       description: '',
@@ -49,13 +49,13 @@ export const NewMovie = ({ onAdd }: NewMovieProps) => {
   };
 
   return (
-    <form className="NewMovie" key={count}>
+    <form className="NewMovie" key={count} onSubmit={handleSubmit}>
       <h2 className="title">Add a movie</h2>
 
       <TextField
         name="title"
         label="Title"
-        value={formData.title}
+        value={formData.title.trim()}
         onChange={newValue =>
           setFormData(prev => ({ ...prev, title: newValue }))
         }
@@ -65,7 +65,7 @@ export const NewMovie = ({ onAdd }: NewMovieProps) => {
       <TextField
         name="description"
         label="Description"
-        value={formData.description}
+        value={formData.description.trim()}
         onChange={newValue =>
           setFormData(prev => ({ ...prev, description: newValue }))
         }
@@ -74,7 +74,7 @@ export const NewMovie = ({ onAdd }: NewMovieProps) => {
       <TextField
         name="imgUrl"
         label="Image URL"
-        value={formData.imgUrl}
+        value={formData.imgUrl.trim()}
         onChange={newValue =>
           setFormData(prev => ({ ...prev, imgUrl: newValue }))
         }
@@ -85,7 +85,7 @@ export const NewMovie = ({ onAdd }: NewMovieProps) => {
       <TextField
         name="imdbUrl"
         label="Imdb URL"
-        value={formData.imdbUrl}
+        value={formData.imdbUrl.trim()}
         onChange={newValue =>
           setFormData(prev => ({ ...prev, imdbUrl: newValue }))
         }
@@ -96,7 +96,7 @@ export const NewMovie = ({ onAdd }: NewMovieProps) => {
       <TextField
         name="imdbId"
         label="Imdb ID"
-        value={formData.imdbId}
+        value={formData.imdbId.trim()}
         onChange={newValue =>
           setFormData(prev => ({ ...prev, imdbId: newValue }))
         }
@@ -115,7 +115,6 @@ export const NewMovie = ({ onAdd }: NewMovieProps) => {
               !formData.imdbUrl ||
               !formData.imdbId
             }
-            onClick={handleSubmit}
           >
             Add
           </button>
