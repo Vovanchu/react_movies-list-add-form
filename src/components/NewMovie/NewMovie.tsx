@@ -34,9 +34,21 @@ export const NewMovie = ({ onAdd }: NewMovieProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    onAdd(formData);
+    // Validate required field
+    if (!formData.title.trim()) {
+      return; // Do not submit if title is empty
+    }
 
-    // Clear the form
+    onAdd({
+      ...formData,
+      title: formData.title.trim(),
+      description: formData.description.trim(),
+      imgUrl: formData.imgUrl.trim(),
+      imdbUrl: formData.imdbUrl.trim(),
+      imdbId: formData.imdbId.trim(),
+    });
+
+    // Clear the form only after successful submission
     setFormData({
       title: '',
       description: '',
@@ -55,7 +67,7 @@ export const NewMovie = ({ onAdd }: NewMovieProps) => {
       <TextField
         name="title"
         label="Title"
-        value={formData.title.trim()}
+        value={formData.title}
         onChange={newValue =>
           setFormData(prev => ({ ...prev, title: newValue }))
         }
@@ -65,7 +77,7 @@ export const NewMovie = ({ onAdd }: NewMovieProps) => {
       <TextField
         name="description"
         label="Description"
-        value={formData.description.trim()}
+        value={formData.description}
         onChange={newValue =>
           setFormData(prev => ({ ...prev, description: newValue }))
         }
@@ -74,7 +86,7 @@ export const NewMovie = ({ onAdd }: NewMovieProps) => {
       <TextField
         name="imgUrl"
         label="Image URL"
-        value={formData.imgUrl.trim()}
+        value={formData.imgUrl}
         onChange={newValue =>
           setFormData(prev => ({ ...prev, imgUrl: newValue }))
         }
@@ -85,7 +97,7 @@ export const NewMovie = ({ onAdd }: NewMovieProps) => {
       <TextField
         name="imdbUrl"
         label="Imdb URL"
-        value={formData.imdbUrl.trim()}
+        value={formData.imdbUrl}
         onChange={newValue =>
           setFormData(prev => ({ ...prev, imdbUrl: newValue }))
         }
@@ -96,7 +108,7 @@ export const NewMovie = ({ onAdd }: NewMovieProps) => {
       <TextField
         name="imdbId"
         label="Imdb ID"
-        value={formData.imdbId.trim()}
+        value={formData.imdbId}
         onChange={newValue =>
           setFormData(prev => ({ ...prev, imdbId: newValue }))
         }
