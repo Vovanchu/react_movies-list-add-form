@@ -34,21 +34,26 @@ export const NewMovie = ({ onAdd }: NewMovieProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate required field
-    if (!formData.title.trim()) {
-      return; // Do not submit if title is empty
+    const trimmedTitle = formData.title.trim();
+    const trimmedImgUrl = formData.imgUrl.trim();
+    const trimmedImdbUrl = formData.imdbUrl.trim();
+    const trimmedImdbId = formData.imdbId.trim();
+    const trimmedDescription = formData.description.trim();
+
+    // Validate required fields
+    if (!trimmedTitle || !trimmedImgUrl || !trimmedImdbUrl || !trimmedImdbId) {
+      return; // Do not submit if any required field is empty
     }
 
     onAdd({
-      ...formData,
-      title: formData.title.trim(),
-      description: formData.description.trim(),
-      imgUrl: formData.imgUrl.trim(),
-      imdbUrl: formData.imdbUrl.trim(),
-      imdbId: formData.imdbId.trim(),
+      title: trimmedTitle,
+      description: trimmedDescription,
+      imgUrl: trimmedImgUrl,
+      imdbUrl: trimmedImdbUrl,
+      imdbId: trimmedImdbId,
     });
 
-    // Clear the form only after successful submission
+    // Clear the form after successful submission
     setFormData({
       title: '',
       description: '',
@@ -59,6 +64,12 @@ export const NewMovie = ({ onAdd }: NewMovieProps) => {
 
     setCount(prev => prev + 1);
   };
+
+  const isSubmitDisabled =
+    !formData.title.trim() ||
+    !formData.imgUrl.trim() ||
+    !formData.imdbUrl.trim() ||
+    !formData.imdbId.trim();
 
   return (
     <form className="NewMovie" key={count} onSubmit={handleSubmit}>
@@ -121,12 +132,7 @@ export const NewMovie = ({ onAdd }: NewMovieProps) => {
             type="submit"
             data-cy="submit-button"
             className="button is-link"
-            disabled={
-              !formData.title ||
-              !formData.imgUrl ||
-              !formData.imdbUrl ||
-              !formData.imdbId
-            }
+            disabled={isSubmitDisabled}
           >
             Add
           </button>
